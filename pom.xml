@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.1.5</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+  <groupId>ru.test</groupId>
+  <artifactId>app</artifactId>
+  <version>1</version>
+  <name>app</name>
+  <description>app</description>
+  <properties>
+    <java.version>11</java.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.modelmapper</groupId>
+      <artifactId>modelmapper</artifactId>
+      <version>2.4.5</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-testcontainers</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <version>1.18.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>1.18.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.testcontainers/postgresql -->
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>1.18.2</version>
+      <scope>test</scope>
+    </dependency>
+
+
+
+    <dependency>
+      <groupId>com.graphql-java</groupId>
+      <artifactId>graphql-java</artifactId>
+      <version>17.5</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.graphql-java-kickstart</groupId>
+      <artifactId>graphql-spring-boot-starter</artifactId>
+      <version>11.1.0</version>
+    </dependency>
+
+    <!-- https://mavenlibs.com/maven/dependency/com.graphql-java/graphql-java-extended-scalars -->
+    <dependency>
+      <groupId>com.graphql-java</groupId>
+      <artifactId>graphql-java-extended-scalars</artifactId>
+      <version>0.0.0-2023-08-25T03-41-46-8efbe9e</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.graphql-java-kickstart</groupId>
+      <artifactId>graphql-java-servlet</artifactId>
+      <version>11.1.0</version> <!-- Используйте актуальную версию -->
+    </dependency>
+
+
+
+    <!--    &lt;!&ndash; https://mavenlibs.com/maven/dependency/com.graphql-java-kickstart/playground-spring-boot-starter &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>com.graphql-java-kickstart</groupId>-->
+<!--      <artifactId>playground-spring-boot-starter</artifactId>-->
+<!--      <version>11.1.0</version>-->
+<!--    </dependency>-->
+
+<!--    &lt;!&ndash; GraphQL Java &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>com.graphql-java</groupId>-->
+<!--      <artifactId>graphql-java</artifactId>-->
+<!--      &lt;!&ndash; Проверьте актуальную версию &ndash;&gt;-->
+<!--      <version>21.1</version>-->
+<!--    </dependency>-->
+
+<!--    &lt;!&ndash; GraphQL Java Tools &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>com.graphql-java-kickstart</groupId>-->
+<!--      <artifactId>graphql-java-tools</artifactId>-->
+<!--      &lt;!&ndash; Проверьте актуальную версию &ndash;&gt;-->
+<!--      <version>13.0.3</version>-->
+<!--    </dependency>-->
+
+  </dependencies>
+
+
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <image>
+            <builder>paketobuildpacks/builder-jammy-base:latest</builder>
+          </image>
+          <excludes>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

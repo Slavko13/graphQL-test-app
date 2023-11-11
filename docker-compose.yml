@@ -1,0 +1,25 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: test_app
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5448:5432"
+    networks:
+      - networktest
+
+  testapp:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - networktest
+
+networks:
+  networktest:
+    driver: bridge

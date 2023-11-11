@@ -1,0 +1,34 @@
+type Author {
+    id: ID!
+    name: String!
+}
+
+type Book {
+    id: ID!
+    title: String!
+    author: Author!
+}
+
+
+
+type Query {
+    hello: String
+    getAllAuthors: [Author]!
+    getAuthorByName(name: String!): Author
+    getAllBooks: [Book]!
+    getBooksByAuthorId(authorId: ID!): [Book]!
+}
+
+type Mutation {
+    saveAuthor(author: AuthorInput!): Author!
+    saveBook(book: BookInput!): Book!
+}
+
+input AuthorInput {
+    name: String!
+}
+
+input BookInput {
+    title: String!
+    authorId: ID!
+}
