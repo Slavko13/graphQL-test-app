@@ -12,7 +12,6 @@ type Book {
 
 
 type Query {
-    hello: String
     getAllAuthors: [Author]!
     getAuthorByName(name: String!): Author
     getAllBooks: [Book]!

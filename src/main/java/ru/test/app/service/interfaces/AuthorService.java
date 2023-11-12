@@ -1,5 +1,6 @@
 package ru.test.app.service.interfaces;
 
+import org.springframework.stereotype.Service;
 import ru.test.app.dto.AuthorDTO;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
  * Service interface for handling Author-related operations.
  * Author: Viacheslav Petrenko
  */
+@Service
 public interface AuthorService {
 
     /**
