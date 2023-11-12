@@ -119,7 +119,7 @@ mvn test
     "variables": {
       "name": "Bbo Jhnson"
     }
-}
+  }
   ```
 
 ### 4. Получение списка всех книг
