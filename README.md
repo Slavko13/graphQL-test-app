@@ -8,6 +8,7 @@
 
 - Java 17.0.5
 - PostgreSQL
+- Flyway
 - Maven
 - GraphQL
 - Testcontainers (для интеграционных тестов)
