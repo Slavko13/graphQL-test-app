@@ -92,7 +92,7 @@ mvn test
 - **Запрос:**
   ```json
   {
-    "getAllAuthors": "{ getAllAuthors { id name } }",
+    "query": "{ getAllAuthors { id name } }",
     "variables": {}
   }
   ```
@@ -129,7 +129,7 @@ mvn test
 - **Запрос:**
   ```json
   {
-    "getAllBooks": "{ getAllBooks { id title author { id name } } }",
+    "query": "{ getAllBooks { id title author { id name } } }",
     "variables": {}
   }
   ```
