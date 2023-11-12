@@ -83,6 +83,13 @@ public class AuthorServiceImpl extends CommonService implements AuthorService {
         return map(author, AuthorDTO.class);
     }
 
+    /**
+     * Retrieves the author with the closest fuzzy name match to the given input name.
+     *
+     * @param inputName The input name to find a fuzzy match for.
+     * @return The {@link AuthorDTO} with the closest fuzzy name match.
+     * @throws ResourceNotFoundException If no author with a fuzzy name match is found within the maximum allowed distance.
+     */
     @Override
     public AuthorDTO getAuthorByFuzzyName(String inputName) {
         int minDistance = Integer.MAX_VALUE;
@@ -103,6 +110,13 @@ public class AuthorServiceImpl extends CommonService implements AuthorService {
         }
     }
 
+    /**
+     * Calculates the Levenshtein distance between two strings.
+     *
+     * @param str1 The first string.
+     * @param str2 The second string.
+     * @return The Levenshtein distance between the two strings.
+     */
     private int calculateLevenshteinDistance(String str1, String str2) {
         int[][] dp = new int[str1.length() + 1][str2.length() + 1];
 
@@ -125,9 +139,16 @@ public class AuthorServiceImpl extends CommonService implements AuthorService {
         return dp[str1.length()][str2.length()];
     }
 
+    /**
+     * Finds the minimum value among three integers.
+     *
+     * @param a The first integer.
+     * @param b The second integer.
+     * @param c The third integer.
+     * @return The minimum value among the three integers.
+     */
     private int min(int a, int b, int c) {
         return Math.min(Math.min(a, b), c);
     }
-
 }
 
