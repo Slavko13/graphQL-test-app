@@ -24,6 +24,7 @@ import java.util.Optional;
 @Service
 public class AuthorServiceImpl extends CommonService implements AuthorService {
 
+    private static final int MAX_ALLOWED_DISTANCE = 3;
     private final AuthorRepository authorRepository;
 
     public AuthorServiceImpl(final AuthorRepository authorRepository)
@@ -81,5 +82,52 @@ public class AuthorServiceImpl extends CommonService implements AuthorService {
         Author author = authorOptional.get();
         return map(author, AuthorDTO.class);
     }
+
+    @Override
+    public AuthorDTO getAuthorByFuzzyName(String inputName) {
+        int minDistance = Integer.MAX_VALUE;
+        AuthorDTO closestAuthor = null;
+
+        for (AuthorDTO author : getAllAuthors()) {
+            int distance = calculateLevenshteinDistance(inputName, author.getName());
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestAuthor = author;
+            }
+        }
+
+        if (minDistance <= MAX_ALLOWED_DISTANCE) {
+            return closestAuthor;
+        } else {
+            throw new ResourceNotFoundException("Author with name " + inputName + " not found.");
+        }
+    }
+
+    private int calculateLevenshteinDistance(String str1, String str2) {
+        int[][] dp = new int[str1.length() + 1][str2.length() + 1];
+
+        for (int i = 0; i <= str1.length(); i++) {
+            for (int j = 0; j <= str2.length(); j++) {
+                if (i == 0) {
+                    dp[i][j] = j;
+                } else if (j == 0) {
+                    dp[i][j] = i;
+                } else {
+                    dp[i][j] = min(
+                            dp[i - 1][j - 1] + (str1.charAt(i - 1) == str2.charAt(j - 1) ? 0 : 1),
+                            dp[i - 1][j] + 1,
+                            dp[i][j - 1] + 1
+                    );
+                }
+            }
+        }
+
+        return dp[str1.length()][str2.length()];
+    }
+
+    private int min(int a, int b, int c) {
+        return Math.min(Math.min(a, b), c);
+    }
+
 }
 

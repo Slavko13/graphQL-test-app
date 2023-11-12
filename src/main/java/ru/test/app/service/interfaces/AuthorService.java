@@ -36,5 +36,8 @@ public interface AuthorService {
      * @throws RuntimeException If the author with the specified name is not found.
      */
     AuthorDTO getAuthorByName(String name);
+
+    AuthorDTO getAuthorByFuzzyName(String inputName);
+
 }
 

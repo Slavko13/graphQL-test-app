@@ -9,11 +9,10 @@ type Book {
     author: Author!
 }
 
-
-
 type Query {
     getAllAuthors: [Author]!
     getAuthorByName(name: String!): Author
+    getAuthorByFuzzyName(name: String!): Author
     getAllBooks: [Book]!
     getBooksByAuthorId(authorId: ID!): [Book]!
 }

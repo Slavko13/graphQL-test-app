@@ -51,6 +51,17 @@ public class AuthorGraphQLResolver implements GraphQLQueryResolver, GraphQLMutat
     }
 
 
+    /**
+     * Retrieves an author by fuzzy name.
+     *
+     * @param name The name of the author.
+     * @return The author with the specified name.
+     */
+    public AuthorDTO getAuthorByFuzzyName(String name) {
+        return authorService.getAuthorByFuzzyName(name);
+    }
+
+
     // Mutation Resolvers
 
     /**
