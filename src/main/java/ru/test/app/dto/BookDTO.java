@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * Data Transfer Object (DTO) for Book entity.
  * Author: Viacheslav Petrenko
@@ -12,20 +14,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookDTO {
-
     private Long id;
     private String title;
-    private AuthorDTO author;
-
-
-
+    private List<AuthorDTO> authors;
 
     @Data
     public static class BookDTOInput {
+        private Long id;
         private String title;
-        private Long authorId;
+        private List<AuthorDTO.AuthorDTOInput> authors;
 
+
+        public BookDTOInput(final String title)
+        {
+            this.title = title;
+        }
     }
-
 }
 

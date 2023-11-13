@@ -1,12 +1,13 @@
 type Author {
     id: ID!
     name: String!
+    books: [Book]!
 }
 
 type Book {
     id: ID!
     title: String!
-    author: Author!
+    authors: [Author]!
 }
 
 type Query {
@@ -23,10 +24,13 @@ type Mutation {
 }
 
 input AuthorInput {
+    id: ID
     name: String!
+    books: [BookInput]
 }
+
 
 input BookInput {
     title: String!
-    authorId: ID!
+    authors: [AuthorInput]!
 }

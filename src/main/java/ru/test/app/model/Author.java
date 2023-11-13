@@ -3,6 +3,7 @@ package ru.test.app.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class Author {
 
     private String name;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private List<Book> books;
+    @ManyToMany(mappedBy = "authors", fetch = FetchType.EAGER)
+    private List<Book> books = new ArrayList<>();
 }
 

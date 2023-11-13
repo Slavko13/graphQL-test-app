@@ -1,17 +1,21 @@
 package ru.test.app.service.impls;
 
-import org.modelmapper.ModelMapper;
+import org.hibernate.Hibernate;
 import ru.test.app.dto.AuthorDTO;
+import ru.test.app.dto.BookDTO;
 import ru.test.app.exception.BadRequestException;
 import ru.test.app.exception.ResourceNotFoundException;
 import ru.test.app.model.Author;
+import ru.test.app.model.Book;
 import ru.test.app.repo.AuthorRepository;
+import ru.test.app.repo.BookRepository;
 import ru.test.app.service.CommonService;
 import ru.test.app.service.interfaces.AuthorService;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,13 +31,16 @@ public class AuthorServiceImpl extends CommonService implements AuthorService {
     private static final int MAX_ALLOWED_DISTANCE = 3;
     private final AuthorRepository authorRepository;
 
-    public AuthorServiceImpl(final AuthorRepository authorRepository)
+    private final BookRepository bookRepository;
+
+    public AuthorServiceImpl(final AuthorRepository authorRepository, final BookRepository bookRepository)
     {
         this.authorRepository = authorRepository;
+        this.bookRepository = bookRepository;
     }
 
     /**
-     * Saves an author. If an author with the same name already exists, throws an exception.
+     * Saves an author and his books if setted. If an author with the same name already exists, throws an exception.
      *
      * @param authorDTO The DTO representing the author.
      * @return The saved author.
@@ -49,9 +56,31 @@ public class AuthorServiceImpl extends CommonService implements AuthorService {
         }
 
         Author author = map(authorDTO, Author.class);
+
         Author savedAuthor = authorRepository.save(author);
+        List<Book> savedBooks = new ArrayList<>();
+
+        if (authorDTO.getBooks() != null && !authorDTO.getBooks().isEmpty()) {
+            for (BookDTO.BookDTOInput bookDTO : authorDTO.getBooks()) {
+                Optional<Book> existingBook = bookRepository.findByTitleAndAuthorsIn(bookDTO.getTitle(), Collections.singletonList(savedAuthor));
+
+                if (existingBook.isPresent()) {
+                    savedAuthor.getBooks().add(existingBook.get());
+                } else {
+                    Book book = map(bookDTO, Book.class);
+                    book.setAuthors(List.of(savedAuthor));
+                    savedAuthor.getBooks().add(book);
+                    savedBooks.add(bookRepository.save(book));
+                }
+            }
+            savedAuthor.setBooks(savedBooks);
+        } else {
+            savedAuthor.setBooks(new ArrayList<>());
+        }
+
         return map(savedAuthor, AuthorDTO.class);
     }
+
 
     /**
      * Retrieves a list of all authors.
@@ -80,6 +109,7 @@ public class AuthorServiceImpl extends CommonService implements AuthorService {
         }
 
         Author author = authorOptional.get();
+        Hibernate.initialize(author.getBooks());
         return map(author, AuthorDTO.class);
     }
 
