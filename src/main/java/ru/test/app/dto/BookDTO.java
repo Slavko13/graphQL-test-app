@@ -23,12 +23,6 @@ public class BookDTO {
         private Long id;
         private String title;
         private List<AuthorDTO.AuthorDTOInput> authors;
-
-
-        public BookDTOInput(final String title)
-        {
-            this.title = title;
-        }
     }
 }
 

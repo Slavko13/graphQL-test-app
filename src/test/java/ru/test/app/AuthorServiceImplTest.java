@@ -85,11 +85,11 @@ public class AuthorServiceImplTest {
     public void testSaveAuthorWithBooks() {
         AuthorDTO.AuthorDTOInput authorDTOInput = new AuthorDTO.AuthorDTOInput();
         authorDTOInput.setName("Ivan Chernov");
-
-        List<BookDTO.BookDTOInput> bookDTOInputs = new ArrayList<>();
-        bookDTOInputs.add(new BookDTO.BookDTOInput("Book 1"));
-        bookDTOInputs.add(new BookDTO.BookDTOInput("Book 2"));
-        authorDTOInput.setBooks(bookDTOInputs);
+        BookDTO.BookDTOInput book1 = new BookDTO.BookDTOInput();
+        book1.setTitle("book1");
+        BookDTO.BookDTOInput book2 = new BookDTO.BookDTOInput();
+        book2.setTitle("book2");
+        authorDTOInput.setBooks(List.of(book1, book2));
 
         AuthorDTO savedAuthor = authorService.saveAuthor(authorDTOInput);
 

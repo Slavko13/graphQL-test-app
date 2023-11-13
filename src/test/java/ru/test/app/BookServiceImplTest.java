@@ -79,7 +79,8 @@ class BookServiceImplTest
         AuthorDTO.AuthorDTOInput authorDTOInput = new AuthorDTO.AuthorDTOInput();
         authorDTOInput.setName("Harper Lee");
 
-        BookDTO.BookDTOInput bookDTOInput = new BookDTO.BookDTOInput("To Kill a Mockingbird");
+        BookDTO.BookDTOInput bookDTOInput = new BookDTO.BookDTOInput();
+        bookDTOInput.setTitle("To Kill a Mockingbird");
         bookDTOInput.setAuthors(Collections.singletonList(authorDTOInput));
 
         // Act
