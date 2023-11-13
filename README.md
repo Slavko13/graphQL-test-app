@@ -60,6 +60,7 @@
     ```
 
 4. Приложение теперь доступно по адресу `http://localhost:8080/graphql`.
+5. База данных будет доступна на localhost:5488.
 
 ## Инструкция по Запуску через IDE для Разработки
 
@@ -96,9 +97,10 @@ mvn test
 - **Запрос:**
   ```json
   {
-    "query": "{ getAllAuthors { id name } }",
-    "variables": {}
+  "query": "query GetAllAuthors { getAllAuthors { id name books { id title } } }",
+  "variables": {}
   }
+
   ```
 
 ### 2. Получение информации об авторе по имени
@@ -107,9 +109,9 @@ mvn test
 - **Запрос:**
   ```json
   {
-      "query": "query GetAuthorByName($name: String!) { getAuthorByName(name: $name) { id name } }",
+      "query": "query GetAuthorByName($name: String!) { getAuthorByName(name: $name) { id name books { id title } } }",
       "variables": {
-        "name": "Имя Автора"
+        "name": "John Doe"
       }
   }
   ```
@@ -120,10 +122,10 @@ mvn test
 - **Запрос:**
   ```json
   {
-    "query": "query GetAuthorByFuzzyName($name: String!) { getAuthorByFuzzyName(name: $name) { id name } }",
-    "variables": {
-      "name": "Bbo Jhnson"
-    }
+      "query": "query GetAuthorByFuzzyName($name: String!) { getAuthorByFuzzyName(name: $name) { id name books { id title } } }",
+      "variables": {
+        "name": "Bbo Jhnson"
+      }
   }
   ```
 
@@ -133,9 +135,10 @@ mvn test
 - **Запрос:**
   ```json
   {
-    "query": "{ getAllBooks { id title author { id name } } }",
-    "variables": {}
+      "query": "query GetAllBooks { getAllBooks { id title authors { id name } } }",
+      "variables": {}
   }
+
   ```
 
 ### 5. Получение списка книг по идентификатору автора
@@ -153,34 +156,65 @@ mvn test
 
 ### 6. Сохранение нового автора
 
-- **Описание:** Сохранение нового автора с указанным именем.
+- **Описание:** Сохранение нового автора с указанным именем и его новыми книгами.
 - **Запрос:**
   ```json
   {
-      "query": "mutation SaveAuthor($author: AuthorInput!) { saveAuthor(author: $author) { id name } }",
+      "query": "mutation SaveAuthor($author: AuthorInput!) { saveAuthor(author: $author) { id name books { id title } } }",
       "variables": {
         "author": {
-          "name": "Новый Автор"
+          "name": "New Author",
+          "books": [
+            {
+              "title": "Book Title 1"
+            },
+            {
+              "title": "Book Title 2"
+            }
+          ]
         }
       }
   }
   ```
+
+- **Описание:** Сохранение нового автора с указанным именем без его творчества.
+- **Запрос:**
+  ```json
+  {
+      "query": "mutation SaveAuthor($author: AuthorInput!) { saveAuthor(author: $author) { id name books { id title } } }",
+      "variables": {
+          "author": {
+          "name": "New Author - 23"
+        }
+      }
+  }
+  
+  ```
+
 
 ### 7. Сохранение новой книги
 
-- **Описание:** Сохранение новой книги с указанным заголовком и идентификатором автора.
+- **Описание:** Сохранение новой книги с указанным заголовком и без идентификатора автора, что приведет создание нового автора и новой книги. Если идентификатор автора указан это приведет к присвоении новой книги уже существующему автору.
 - **Запрос:**
   ```json
   {
-      "query": "mutation SaveBook($book: BookInput!) { saveBook(book: $book) { id title author { id name } } }",
+      "query": "mutation SaveBook($book: BookInput!) { saveBook(book: $book) { id title authors { id name } } }",
       "variables": {
         "book": {
-          "title": "Новая Книга",
-          "authorId": "1"
+          "title": "New Book",
+          "authors": [
+            {
+              "name": "Author Name"
+            },
+            { 
+              "id": 1
+            }
+          ]
         }
       }
   }
   ```
+  
 
 Примечание: Параметр variables обязателен для передачи переменных. В случае отсутствия переменных, его можно оставить пустым (например, "variables": {}).
 Замените значения переменных (например, "Имя Автора", "1", "Новый Автор") на актуальные данные для ваших тестовых сценариев.
