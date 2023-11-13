@@ -143,21 +143,21 @@ public class AuthorServiceImplTest {
         assertThrows(ResourceNotFoundException.class, () -> authorService.getAuthorByName(authorName));
     }
 
-    // /**
-    //  * Test retrieving an author by fuzzy name.
-    //  */
-    // @Test
-    // public void testGetAuthorByFuzzyName() {
-    //     String inputName = "Slava Petrenko";
-    //     AuthorDTO.AuthorDTOInput authorDTOInput = new AuthorDTO.AuthorDTOInput();
-    //     authorDTOInput.setName(inputName);
-    //     AuthorDTO savedAuthor = authorService.saveAuthor(authorDTOInput);
-    //     String inputNameWithErrors = "Slva Ptrenko";
-    //     AuthorDTO retrievedAuthor = authorService.getAuthorByFuzzyName(inputNameWithErrors);
-    //     assertNotNull(retrievedAuthor);
-    //     assertEquals(savedAuthor.getId(), retrievedAuthor.getId());
-    //     assertEquals(savedAuthor.getName(), retrievedAuthor.getName());
-    // }
+    /**
+     * Test retrieving an author by fuzzy name.
+     */
+    @Test
+    public void testGetAuthorByFuzzyName() {
+        String inputName = "Slava Petrenko";
+        AuthorDTO.AuthorDTOInput authorDTOInput = new AuthorDTO.AuthorDTOInput();
+        authorDTOInput.setName(inputName);
+        AuthorDTO savedAuthor = authorService.saveAuthor(authorDTOInput);
+        String inputNameWithErrors = "Slva Ptrenko";
+        AuthorDTO retrievedAuthor = authorService.getAuthorByFuzzyName(inputNameWithErrors);
+        assertNotNull(retrievedAuthor);
+        assertEquals(savedAuthor.getId(), retrievedAuthor.getId());
+        assertEquals(savedAuthor.getName(), retrievedAuthor.getName());
+    }
 }
 
 
