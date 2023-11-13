@@ -147,11 +147,12 @@ mvn test
 - **Запрос:**
   ```json
   {
-      "query": "query GetBooksByAuthorId($authorId: ID!) { getBooksByAuthorId(authorId: $authorId) { id title author { id name } } }",
-      "variables": {
-        "authorId": "1"
+  "query": "query GetBooksByAuthorId($authorId: ID!) { getBooksByAuthorId(authorId: $authorId) { id title authors { id name } } }",
+  "variables": {
+    "authorId": "1"
       }
   }
+
   ```
 
 ### 6. Сохранение нового автора
