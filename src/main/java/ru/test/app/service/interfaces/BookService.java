@@ -1,7 +1,6 @@
 package ru.test.app.service.interfaces;
 
 import org.springframework.stereotype.Service;
-import ru.test.app.dto.AuthorDTO;
 import ru.test.app.dto.BookDTO;
 
 import java.util.List;

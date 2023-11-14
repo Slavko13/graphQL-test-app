@@ -1,5 +1,6 @@
 package ru.test.app.service.impls;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.test.app.dto.AuthorDTO;
 import ru.test.app.dto.BookDTO;
@@ -12,9 +13,6 @@ import ru.test.app.service.interfaces.BookService;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import java.util.stream.Collectors;
 
 /**

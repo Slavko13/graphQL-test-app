@@ -1,15 +1,8 @@
 package ru.test.app;
 
-import org.flywaydb.core.Flyway;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -26,8 +19,6 @@ import ru.test.app.repo.AuthorRepository;
 import ru.test.app.repo.BookRepository;
 import ru.test.app.service.impls.AuthorServiceImpl;
 
-import javax.sql.DataSource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,10 +26,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Integration tests for the AuthorServiceImpl.
- *
  * These tests use Spring Boot's testing support along with Testcontainers for
  * setting up and managing a PostgreSQL container for the test database.
- *
+ * Unit tests for the {@link AuthorServiceImpl} class.
  * Author: Viacheslav Petrenko
  */
 @SpringBootTest
@@ -56,12 +46,10 @@ public class AuthorServiceImplTest {
     @Autowired
     private BookRepository bookRepository;
 
-    @Container
-    private static final PostgreSQLContainer<?> postgresContainer = new PostgreSQLContainer<>("postgres:latest");
-
-
     /**
      * Test saving a new author.
+     *
+     * @see AuthorServiceImpl#saveAuthor(AuthorDTO.AuthorDTOInput)
      */
     @Test
     public void testSaveAuthor() {
@@ -80,6 +68,8 @@ public class AuthorServiceImplTest {
 
     /**
      * Test saving a new author with associated books.
+     *
+     * @see AuthorServiceImpl#saveAuthor(AuthorDTO.AuthorDTOInput)
      */
     @Test
     public void testSaveAuthorWithBooks() {
@@ -101,11 +91,12 @@ public class AuthorServiceImplTest {
 
         List<Book> savedBooks = bookRepository.findBooksByAuthorId(savedAuthor.getId());
         assertEquals(2, savedBooks.size());
-
     }
 
     /**
      * Test attempting to save an author with an existing name.
+     *
+     * @see AuthorServiceImpl#saveAuthor(AuthorDTO.AuthorDTOInput)
      */
     @Test
     public void testSaveAuthorWithExistingAuthor() {
@@ -119,6 +110,8 @@ public class AuthorServiceImplTest {
 
     /**
      * Test retrieving an author by name.
+     *
+     * @see AuthorServiceImpl#getAuthorByName(String)
      */
     @Test
     public void testGetAuthorByName() {
@@ -136,6 +129,8 @@ public class AuthorServiceImplTest {
 
     /**
      * Test attempting to retrieve an author by a nonexistent name.
+     *
+     * @see AuthorServiceImpl#getAuthorByName(String)
      */
     @Test
     public void testGetAuthorByNameNotFound() {
@@ -145,6 +140,8 @@ public class AuthorServiceImplTest {
 
     /**
      * Test retrieving an author by fuzzy name.
+     *
+     * @see AuthorServiceImpl#getAuthorByFuzzyName(String)
      */
     @Test
     public void testGetAuthorByFuzzyName() {
@@ -159,5 +156,3 @@ public class AuthorServiceImplTest {
         assertEquals(savedAuthor.getName(), retrievedAuthor.getName());
     }
 }
-
-

@@ -15,17 +15,18 @@ import ru.test.app.model.Author;
 import ru.test.app.model.Book;
 import ru.test.app.repo.AuthorRepository;
 import ru.test.app.repo.BookRepository;
-import ru.test.app.service.impls.AuthorServiceImpl;
 import ru.test.app.service.impls.BookServiceImpl;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
+ * These tests use Spring Boot's testing support along with Testcontainers for
+ * setting up and managing a PostgreSQL container for the test database.
  * Unit tests for the {@link BookServiceImpl} class.
+ * Author: Viacheslav Petrenko
  */
 @SpringBootTest
 @Testcontainers
@@ -52,7 +53,6 @@ class BookServiceImplTest
     @Transactional
     void getBooksByAuthorId()
     {
-        // Arrange
         Author author = new Author();
         author.setName("Leo Tolstoy");
         Author savedAuthor = authorRepository.save(author);
@@ -75,7 +75,6 @@ class BookServiceImplTest
     @BeforeEach
     void saveBook()
     {
-        // Arrange
         AuthorDTO.AuthorDTOInput authorDTOInput = new AuthorDTO.AuthorDTOInput();
         authorDTOInput.setName("Harper Lee");
 
@@ -83,10 +82,8 @@ class BookServiceImplTest
         bookDTOInput.setTitle("To Kill a Mockingbird");
         bookDTOInput.setAuthors(Collections.singletonList(authorDTOInput));
 
-        // Act
         BookDTO result = bookService.saveBook(bookDTOInput);
 
-        // Assert
         assertEquals("To Kill a Mockingbird", result.getTitle());
         assertEquals(1, result.getAuthors().size());
         assertEquals("Harper Lee", result.getAuthors().get(0).getName());

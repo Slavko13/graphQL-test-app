@@ -1,6 +1,8 @@
 package ru.test.app.service.impls;
 
 import org.hibernate.Hibernate;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.test.app.dto.AuthorDTO;
 import ru.test.app.dto.BookDTO;
 import ru.test.app.exception.BadRequestException;
@@ -15,10 +17,6 @@ import ru.test.app.service.interfaces.AuthorService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Optional;
 
 /**
